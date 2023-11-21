@@ -28,6 +28,10 @@ class GalleryData(GradioRootModel):
     root: List[GalleryImage]
 
 
+GalleryImageType = np.ndarray | _Image.Image | Path | str
+CaptionedGalleryImageType = tuple[GalleryImageType, str]
+
+
 @document()
 class Gallery(Component):
     """
@@ -126,9 +130,7 @@ class Gallery(Component):
 
     def postprocess(
         self,
-        value: list[np.ndarray | _Image.Image | str]
-        | list[tuple[np.ndarray | _Image.Image | str, str]]
-        | None,
+        value: list[GalleryImageType | CaptionedGalleryImageType] | None,
     ) -> GalleryData:
         """
         Parameters:
